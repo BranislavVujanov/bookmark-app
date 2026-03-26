@@ -1,0 +1,26 @@
+[
+  {
+    "id": 100,
+    "title": "Spring Boot Documentation",
+    "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/",
+    "description": "Official reference documentation for Spring Boot",
+    "createdAt": "2026-03-11T16:45:00",
+    "userId": 12
+  },
+  {
+    "id": 101,
+    "title": "Stack Overflow",
+    "url": "https://stackoverflow.com",
+    "description": "Programming Q&A site",
+    "createdAt": "2026-03-10T10:00:00",
+    "userId": 12
+  },
+  {
+    "id": 102,
+    "title": "Baeldung",
+    "url": "https://www.baeldung.com",
+    "description": "Spring tutorials and guides",
+    "createdAt": "2026-03-09T09:30:00",
+    "userId": 12
+  }
+]

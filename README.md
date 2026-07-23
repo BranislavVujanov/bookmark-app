@@ -10,70 +10,71 @@ This application allows authenticated users to manage bookmarks with strict acce
 
 ### 🔐 Access Rules
 
-* **USER**
+- **USER**
+  - Can create, read, update, and delete **their own bookmarks only**
 
-  * Can create, read, update, and delete **their own bookmarks only**
-
-* **MODERATOR**
-
-  * Can view **all bookmarks**
-  * Can delete **any bookmark**
-  * Cannot create or update bookmarks
+- **MODERATOR**
+  - Can view **all bookmarks**
+  - Can delete **any bookmark**
+  - Cannot create or update bookmarks
 
 ---
 
 ## ⚙️ Technologies Used
 
-* **Java 17**
-* **Spring Boot 3.x**
-* **Spring Web (REST API)**
-* **Spring Security (HTTP Basic Authentication)**
-* **Spring Data JDBC**
-* **H2 Database**
-* **Gradle**
-* **NetBeans IDE**
-* **Git & GitHub**
+- **Java 17**
+- **Spring Boot 3.x**
+- **Spring Web (REST API)**
+- **Spring Security (HTTP Basic Authentication)**
+- **Spring Data JDBC**
+- **H2 Database**
+- **Gradle**
+- **NetBeans IDE**
+- **Git & GitHub**
 
 ---
 
 ## 🗄️ Database Design
 
 ### USERS table
-
-* Stores authentication and roles
-* Fields: `id`, `username`, `password`, `role`, `enabled`
+- Stores authentication and roles
+- Fields: `id`, `username`, `password`, `role`, `enabled`
+- Unique constraint → `username`
 
 ### BOOKMARK table
-
-* Stores user bookmarks
-* Fields: `id`, `title`, `url`, `description`, `created_at`, `user_id`
-* Foreign key → USERS(id)
-* Unique constraint → `(user_id, url)` (prevents duplicates)
+- Stores user bookmarks
+- Fields: `id`, `title`, `url`, `description`, `created_at`, `user_id`
+- Foreign key → USERS(id)
+- Unique constraint → `(user_id, url)` (prevents duplicates)
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
-* Java 17 installed
-* Git installed
+- Java 17 installed
+- Git installed
 
 ### Run Locally
 
 1. Clone the repository:
-
-git clone https://github.com/BranislavVujanov/bookmark-app.git
-cd bookmark-app
+   ```
+   git clone https://github.com/BranislavVujanov/bookmark-app.git
+   cd bookmark-app
+   ```
 
 2. Run the application:
-
-./gradlew bootRun   # Linux / Mac
-gradlew.bat bootRun  # Windows
+   ```
+   ./gradlew bootRun   # Linux / Mac
+   gradlew.bat bootRun # Windows
+   ```
 
 3. API available at:
+   ```
+   http://localhost:8080
+   ```
 
-http://localhost:8080
+> **Note:** The app uses an in-memory H2 database, seeded on startup with the example users and bookmarks listed below. Data resets every time the app restarts — this is intentional for a demo/portfolio project, not a bug.
 
 ---
 
@@ -84,7 +85,7 @@ Authentication is handled via **HTTP Basic Auth**.
 ### Example users:
 
 | Username  | Password | Role      | Enabled      |
-| --------- | -------- | --------- | ------------ |
+|-----------|----------|-----------|--------------|
 | anna      | xyz123   | USER      | ✅            |
 | john      | abc123   | USER      | ✅            |
 | moderator | mod123   | MODERATOR | ✅            |
@@ -97,57 +98,69 @@ Authentication is handled via **HTTP Basic Auth**.
 All endpoints require authentication.
 
 ### Endpoints:
-
-* `GET /bookmarks` → List bookmarks (paginated)
-* `GET /bookmarks/{id}` → Get bookmark by ID
-* `POST /bookmarks` → Create bookmark
-* `PUT /bookmarks/{id}` → Update bookmark
-* `DELETE /bookmarks/{id}` → Delete bookmark
+- `GET /bookmarks` → List bookmarks (paginated)
+- `GET /bookmarks/{id}` → Get bookmark by ID
+- `POST /bookmarks` → Create bookmark
+- `PUT /bookmarks/{id}` → Update bookmark
+- `DELETE /bookmarks/{id}` → Delete bookmark
 
 ### Features:
+- Pagination and sorting supported
+  Example: `/bookmarks?page=0&size=2&sort=id,asc`
 
-* Pagination and sorting supported
-  Example:
-  `/bookmarks?page=0&size=2&sort=id,asc`
+`GET /bookmarks` returns a paginated response with metadata, not just a bare list:
+
+```json
+{
+  "content": [
+    { "id": 100, "title": "Spring Boot Documentation", "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/", "description": "...", "createdAt": "2026-03-11T16:45:00", "userId": 12 }
+  ],
+  "totalElements": 5,
+  "totalPages": 1,
+  "size": 20,
+  "number": 0,
+  "first": true,
+  "last": true
+}
+```
 
 ---
 
 ## 🧠 Key Features
 
-* Role-based authorization (USER vs MODERATOR)
-* Per-user data isolation
-* Moderator-level global access (read/delete)
-* Duplicate bookmark prevention (DB + service layer)
-* Input validation with custom exceptions
-* Disabled user authentication handling
-* Pagination and sorting support
-* Comprehensive integration and JSON tests
+- Role-based authorization (USER vs MODERATOR)
+- Per-user data isolation
+- Moderator-level global access (read/delete)
+- Duplicate bookmark prevention (DB + service layer)
+- Input validation with custom exceptions
+- Disabled user authentication handling
+- Pagination and sorting support
+- Comprehensive integration and JSON tests
 
 ---
 
 ## 🧪 Testing
 
 The project includes:
-
-* JSON serialization/deserialization tests
-* Full integration tests using `TestRestTemplate`
-* Authentication and authorization tests
-* Validation and error handling tests
+- JSON serialization/deserialization tests
+- Full integration tests using `TestRestTemplate`
+- Authentication and authorization tests
+- Validation and error handling tests
 
 ---
 
 ## 📂 Project Structure
 
-src/          # Application source code
-build.gradle  # Gradle configuration
-gradlew       # Gradle wrapper
-.gitignore    # Git ignore rules
-README.md     # Project documentation
+```
+src/            # Application source code
+build.gradle    # Gradle configuration
+gradlew         # Gradle wrapper
+.gitignore      # Git ignore rules
+README.md       # Project documentation
+```
 
 ---
 
 ## 🔗 GitHub
 
 https://github.com/BranislavVujanov/bookmark-app
-
-

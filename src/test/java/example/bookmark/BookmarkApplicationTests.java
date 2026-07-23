@@ -166,7 +166,7 @@ class BookmarkApplicationTests {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
 
-        int bookmarkCount = documentContext.read("$.length()");
+        int bookmarkCount = documentContext.read("$.content.length()");
         assertThat(bookmarkCount).isEqualTo(3);
 
         JSONArray ids = documentContext.read("$..id");
@@ -198,7 +198,7 @@ class BookmarkApplicationTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
-        JSONArray page = documentContext.read("$[*]");
+        JSONArray page = documentContext.read("$.content");
         assertThat(page.size()).isEqualTo(2);
     }
     
@@ -210,10 +210,10 @@ class BookmarkApplicationTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
-        JSONArray read = documentContext.read("$[*]");
+        JSONArray read = documentContext.read("$.content");
         assertThat(read.size()).isEqualTo(1);
 
-        Number id = documentContext.read("$[0].id");
+        Number id = documentContext.read("$.content[0].id");
         assertThat(id).isEqualTo(100);
     }
 
@@ -275,7 +275,7 @@ class BookmarkApplicationTests {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
 
-        int bookmarkCount = documentContext.read("$.length()");
+        int bookmarkCount = documentContext.read("$.content.length()");
         assertThat(bookmarkCount).isEqualTo(5);
 
         JSONArray ids = documentContext.read("$..id");

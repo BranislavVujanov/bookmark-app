@@ -57,8 +57,7 @@ public class Bookmark {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        return hash;
+        return Objects.hash(id, title, url, description, createdAt, userId);
     }
 
     @Override

@@ -65,11 +65,11 @@ public class BookmarkController {
     }
     
     @GetMapping
-    public ResponseEntity<List<Bookmark>> findAll(Pageable pageable, Authentication authentication) {
+    public ResponseEntity<Page<Bookmark>> findAll(Pageable pageable, Authentication authentication) {
         
         Page<Bookmark> page = service.findAll(pageable, authentication);
         
-        return ResponseEntity.ok(page.getContent());
+        return ResponseEntity.ok(page);
     }
 
     @DeleteMapping("/{id}")
